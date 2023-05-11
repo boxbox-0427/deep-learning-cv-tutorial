@@ -2,9 +2,10 @@ import torch
 from torchvision import transforms
 from torchvision.datasets import CIFAR10
 from torch.utils.data import DataLoader
-from alexnet import AlexNet
+from backbone import VGG
+from backbone.vgg import cfgs
 from torch.nn import CrossEntropyLoss
-from torch.optim import Adam
+from torch.optim import Adam, SGD
 
 transform = transforms.Compose(
     [
@@ -13,17 +14,17 @@ transform = transforms.Compose(
     ]
 )
 
-train_set = CIFAR10(root=r"E:\CodeWorld\deepl\data", train=True, download=True, transform=transform)
-test_set = CIFAR10(root=r"E:\CodeWorld\deepl\data", train=False, download=True, transform=transform)
+train_set = CIFAR10(root=r"../data", train=True, download=False, transform=transform)
+test_set = CIFAR10(root=r"../data", train=False, download=True, transform=transform)
 
-train_dataloader = DataLoader(train_set, batch_size=32, shuffle=True, num_workers=0)
+train_dataloader = DataLoader(train_set, batch_size=64, shuffle=True, num_workers=0)
 test_dataloader = DataLoader(test_set, batch_size=1, shuffle=True, num_workers=0)
 
 device = "cuda:0"
 
-net = AlexNet().to(device)
+net = VGG("vgg16").to(device)
 loss_func = CrossEntropyLoss()
-optimizer = Adam(params=net.parameters(), lr=0.0001, weight_decay=0.00005)
+optimizer = Adam(params=net.parameters(), lr=0.001, weight_decay=0.0005)
 
 if __name__ == '__main__':
     net.train()
@@ -49,4 +50,4 @@ if __name__ == '__main__':
                 print('[Epoch:%d, Iter:%5d] train_loss: %.3f' %(epoch + 1, step + 1, running_loss / 500))
                 running_loss = 0.0
 
-    torch.save(net.state_dict(), f"{type(net).__name__.lower()}/ckpt/{type(net).__name__.lower()}_cifar10_epoch_{epoch}.pth")
+    torch.save(net.state_dict(), f"ckpt/vgg16_cifar10_epoch_{epoch}.pth")

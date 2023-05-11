@@ -1,4 +1,11 @@
-## 用法
+此部分主要为图像分类任务，以及其他任务的`backbone`
+
+## 训练
+```python
+python train.py
+```
+
+## 推理
 ```python
 python predict.py
 ```
@@ -7,10 +14,12 @@ python predict.py
 ![inference](assets/infer_cifar10.png)
 
 ## 模型进度
-- [x] [LeNet](alexnet/model.py)
-- [x] [AlexNet](alexnet/model.py)
-- [ ] VGG  
+- [x] [LeNet](classification/backbone/alexnet.py)
+- [x] [AlexNet](classification/backbone/alexnet.py)
+- [x] [VGG](classification/backbone/vgg.py)  
+- [ ] GoogleNet  
   ...
  
 ## 模型下载
-[LeNet-epoch100-cifar10](https://deepl-ckpt-classification.gd2.qingstor.com/lenet/lenet_cifar10_epoch_100.pth)
+- [LeNet-epoch100-cifar10](https://deepl-ckpt-classification.gd2.qingstor.com/lenet/lenet_cifar10_epoch_100.pth)
+- ......ar10](https://deepl-ckpt-classification.gd2.qingstor.com/lenet/lenet_cifar10_epoch_100.pth)

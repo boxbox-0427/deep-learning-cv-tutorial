@@ -1,16 +1,31 @@
-## 用法
+本仓库主要用于CV方向的深度学习记录，实现主要的神经网络，及各种学习任务
+
+## 训练模型
+```python
+python train.py
+```
+
+## 模型推理
 ```python
 python predict.py
 ```
 
-## 结果展示
+## 支持功能
+- [x] 图像分类
 ![inference](classification/assets/infer_cifar10.png)
+- [ ] 目标检测
+- [ ] 语义分割
+- [ ] 实例分割
+- [ ] ......
 
 ## 模型进度
-- [x] [LeNet](classification/alexnet/model.py)
-- [x] [AlexNet](classification/alexnet/model.py)
-- [ ] VGG  
+- 图像分类
+- [x] [LeNet](classification/backbone/alexnet.py)
+- [x] [AlexNet](classification/backbone/alexnet.py)
+- [x] [VGG](classification/backbone/vgg.py)  
+- [ ] GoogleNet  
   ...
  
 ## 模型下载
-[LeNet-epoch100-cifar10](https://deepl-ckpt-classification.gd2.qingstor.com/lenet/lenet_cifar10_epoch_100.pth)
+- [LeNet-epoch100-cifar10](https://deepl-ckpt-classification.gd2.qingstor.com/lenet/lenet_cifar10_epoch_100.pth)
+- ......
