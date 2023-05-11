@@ -1,11 +1,11 @@
 本仓库主要用于CV方向的深度学习记录，实现主要的神经网络，及各种学习任务
 
-## 训练
+## 训练模型
 ```python
 python train.py
 ```
 
-## 推理
+## 模型推理
 ```python
 python predict.py
 ```
