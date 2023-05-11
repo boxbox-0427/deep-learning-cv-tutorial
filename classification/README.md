@@ -7,8 +7,8 @@ python predict.py
 ![inference](assets/infer_cifar10.png)
 
 ## 模型进度
-- [x] ![LeNet](alexnet/model.py)
-- [x] ![AlexNet](alexnet/model.py)
+- [x] [LeNet](alexnet/model.py)
+- [x] [AlexNet](alexnet/model.py)
 - [ ] VGG
 ...
  
