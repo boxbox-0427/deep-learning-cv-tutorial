@@ -4,7 +4,7 @@ from torchvision.datasets import CIFAR10
 from torch.utils.data import DataLoader
 from model import LeNet
 from torch.nn import CrossEntropyLoss
-from torch.optim import SGD
+from torch.optim import SGD, Adam
 
 transform = transforms.Compose(
     [
@@ -17,13 +17,13 @@ train_set = CIFAR10(root=r"E:\CodeWorld\deepl\data", train=True, download=True, 
 test_set = CIFAR10(root=r"E:\CodeWorld\deepl\data", train=False, download=True, transform=transform)
 
 train_dataloader = DataLoader(train_set, batch_size=36, shuffle=True, num_workers=0)
-test_dataloader = DataLoader(test_set, batch_size=5000, shuffle=False, num_workers=0)
+test_dataloader = DataLoader(test_set, batch_size=1, shuffle=False, num_workers=0)
 
 device = "cuda:0"
 
 net = LeNet().to(device)
 loss_func = CrossEntropyLoss()
-optimizer = SGD(params=net.parameters(), lr=0.001, weight_decay=0.0005)
+optimizer = Adam(params=net.parameters(), lr=0.0001, weight_decay=0.00005)
 
 if __name__ == '__main__':
     net.train()
@@ -36,6 +36,8 @@ if __name__ == '__main__':
             inputs = inputs.to(device)
             labels = labels.to(device)
 
+            optimizer.zero_grad()
+
             output = net(inputs)
             loss = loss_func(output, labels)
             loss.backward()
@@ -44,7 +46,7 @@ if __name__ == '__main__':
             running_loss += loss.item()
 
             if step % 500 == 0 and step != 0:
-                print('[%d, %5d] train_loss: %.3f' %(epoch + 1, step + 1, running_loss / 500))
+                print('[Epoch:%d, Iter:%5d] train_loss: %.3f' %(epoch + 1, step + 1, running_loss / 500))
                 running_loss = 0.0
 
     torch.save(net.state_dict(), f"ckpt/lenet_cifar10_epoch_{epoch}.pth")
