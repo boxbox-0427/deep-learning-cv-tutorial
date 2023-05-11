@@ -2,15 +2,15 @@ import torch
 import torchvision.transforms as transforms
 from torchvision.transforms import Normalize
 
-from model import LeNet
+from alexnet import AlexNet
 from train import test_dataloader
 import matplotlib.pyplot as plt
 import numpy as np
 
 classes = ('plane', 'car', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship', 'truck')
 device = "cuda:0"
-net = LeNet().to(device)
-net.load_state_dict(torch.load("ckpt/lenet_cifar10_epoch_100.pth"))
+net = AlexNet().to(device)
+net.load_state_dict(torch.load(f"{type(net).__name__.lower()}/ckpt/{type(net).__name__.lower()}_cifar10_epoch_100.pth"))
 net.eval()
 iter_loader = iter(test_dataloader)
 mean = (0.5, 0.5, 0.5)
