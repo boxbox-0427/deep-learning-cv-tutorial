@@ -1,0 +1,4 @@
+classification/lenet/ckpt/lenet_cifar10_epoch_100.pth
+data/cifar-10-batches-py
+data/cifar-10-python.tar.gz
+.idea
