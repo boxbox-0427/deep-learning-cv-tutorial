@@ -12,12 +12,12 @@ transform = transforms.Compose(
     [
         transforms.ToTensor(),
         transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5)),
-        transforms.Resize((224,224))
+        transforms.Resize((224,224), antialias=True)
     ]
 )
 
 train_set = MyDataSet(root=r"../data/animal image dataset/archive/animals/animals", transform=transform)
-train_dataloader = DataLoader(train_set, batch_size=126, shuffle=True, num_workers=0)
+train_dataloader = DataLoader(train_set, batch_size=256, shuffle=True, num_workers=0)
 
 device = "cuda:0"
 

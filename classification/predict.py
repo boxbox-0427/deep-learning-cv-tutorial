@@ -17,17 +17,18 @@ unnormalize = Normalize(mean=(-1 * mean[0] / std[0], -1 * mean[1] / std[1], -1 *
 transform = transforms.Compose(
     [
         transforms.ToTensor(),
-        transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))
+        transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5)),
+        transforms.Resize((224,224), antialias=True)
     ]
 )
 
-test_set = MyDataSet(root=r"../data/Agriculturecropimages/archive/kag2", transform=transform)
+test_set = MyDataSet(root=r"../data/animal image dataset/archive/animals/animals", transform=transform)
 test_dataloader = DataLoader(test_set, batch_size=1, shuffle=True, num_workers=0)
 iter_loader = iter(test_dataloader)
 
 device = "cuda:0"
 net = GoogLeNet(num_classes=len(test_set.label), init_weights=True).to(device)
-net.load_state_dict(torch.load(f"ckpt/googlenet_crop_epoch_100.pth"))
+net.load_state_dict(torch.load(f"ckpt/googlenet_animal_epoch_100.pth"))
 net.eval()
 
 def predict():
