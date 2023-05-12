@@ -23,7 +23,8 @@ python predict.py
 - [x] [LeNet](classification/backbone/alexnet.py)
 - [x] [AlexNet](classification/backbone/alexnet.py)
 - [x] [VGG](classification/backbone/vgg.py)  
-- [ ] GoogleNet  
+- [x] [GoogleNet](classification/backbone/googlenet.py)
+- [ ] ResNet
   ...
  
 ## 模型下载
