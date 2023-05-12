@@ -17,6 +17,9 @@ python predict.py
 ![inference](assets/infer_crop5.png)
 
 
+![inference](assets/infer_animal100.png)
+
+
 ## 模型进度
 - [x] [LeNet](classification/backbone/alexnet.py)
 - [x] [AlexNet](classification/backbone/alexnet.py)

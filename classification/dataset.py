@@ -7,7 +7,7 @@ class MyDataSet(Dataset):
 
     def __init__(self, root, transform):
         super(MyDataSet, self).__init__()
-        self.label = ('jute', 'maize', 'rice', 'sugarcane', 'wheat')
+        self.label = os.listdir(root)
         self.data = []
         self.transform = transform
 

@@ -12,7 +12,7 @@ python predict.py
 
 ## 支持功能
 - [x] 图像分类
-![inference](classification/assets/infer_cifar10.png)
+![inference](classification/assets/infer_animal100.png)
 - [ ] 目标检测
 - [ ] 语义分割
 - [ ] 实例分割
