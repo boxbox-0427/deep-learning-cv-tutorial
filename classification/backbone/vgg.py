@@ -8,10 +8,11 @@ cfgs = {
     'vgg19': [64, 64, 'M', 128, 128, 'M', 256, 256, 256, 256, 'M', 512, 512, 512, 512, 'M', 512, 512, 512, 512, 'M'],
 }
 
+
 class VGG(nn.Module):
-    def __init__(self, vgg: Literal["vgg11", "vgg13", "vgg16", "vgg19"]):
+    def __init__(self):
         super(VGG, self).__init__()
-        self.features = self._make_layers(vgg = cfgs[vgg])
+        self.features = None
         self.dense = nn.Sequential(
             nn.Linear(512, 4096),
             nn.ReLU(inplace=True),
@@ -29,10 +30,11 @@ class VGG(nn.Module):
         out = self.classifier(out)
         return out
 
-    def _make_layers(self, vgg):
+    @staticmethod
+    def make_layers(vgg: Literal["vgg11", "vgg13", "vgg16", "vgg19"]):
         layers = []
         in_channels = 3
-        for x in vgg:
+        for x in cfgs[vgg]:
             if x == 'M':
                 layers += [nn.MaxPool2d(kernel_size=2, stride=2)]
             else:
@@ -44,3 +46,30 @@ class VGG(nn.Module):
         layers += [nn.AvgPool2d(kernel_size=1, stride=1)]
         return nn.Sequential(*layers)
 
+
+class VGG11(VGG):
+
+    def __init__(self):
+        super(VGG11, self).__init__()
+        self.features = VGG.make_layers(vgg="vgg11")
+
+
+class VGG13(VGG):
+
+    def __init__(self):
+        super(VGG13, self).__init__()
+        self.features = VGG.make_layers(vgg="vgg13")
+
+
+class VGG16(VGG):
+
+    def __init__(self):
+        super(VGG16, self).__init__()
+        self.features = VGG.make_layers(vgg="vgg16")
+
+
+class VGG19(VGG):
+
+    def __init__(self):
+        super(VGG19, self).__init__()
+        self.features = VGG.make_layers(vgg="vgg19")

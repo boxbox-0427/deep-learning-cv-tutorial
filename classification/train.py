@@ -1,11 +1,12 @@
 import torch
 from torchvision import transforms
-from torchvision.datasets import CIFAR10
 from torch.utils.data import DataLoader
-from backbone import VGG
-from backbone.vgg import cfgs
+from backbone import GoogLeNet
 from torch.nn import CrossEntropyLoss
 from torch.optim import Adam, SGD
+from dataset import MyDataSet
+
+from log import logger
 
 transform = transforms.Compose(
     [
@@ -14,15 +15,12 @@ transform = transforms.Compose(
     ]
 )
 
-train_set = CIFAR10(root=r"../data", train=True, download=False, transform=transform)
-test_set = CIFAR10(root=r"../data", train=False, download=True, transform=transform)
-
+train_set = MyDataSet(root=r"../data/Agriculturecropimages/archive/kag2", transform=transform)
 train_dataloader = DataLoader(train_set, batch_size=64, shuffle=True, num_workers=0)
-test_dataloader = DataLoader(test_set, batch_size=1, shuffle=True, num_workers=0)
 
 device = "cuda:0"
 
-net = VGG("vgg16").to(device)
+net = GoogLeNet(num_classes=len(train_set.label), init_weights=True).to(device)
 loss_func = CrossEntropyLoss()
 optimizer = Adam(params=net.parameters(), lr=0.001, weight_decay=0.0005)
 
@@ -39,15 +37,26 @@ if __name__ == '__main__':
 
             optimizer.zero_grad()
 
-            output = net(inputs)
-            loss = loss_func(output, labels)
+            # for normal networks
+            # output = net(inputs)
+            # loss = loss_func(output, labels)
+            # loss.backward()
+
+            # for googlenet
+            logits, aux_logits1, aux_logits2 = net(inputs)
+
+            loss0 = loss_func(logits, labels)
+            loss1 = loss_func(aux_logits1, labels)
+            loss2 = loss_func(aux_logits2, labels)
+            loss = loss0 * 0.4 + loss1 * 0.3 + loss2 * 0.3
+
             loss.backward()
+
             optimizer.step()
-
             running_loss += loss.item()
+            # logger.info("[Iter:%d] train_loss for single img %.3f" %(step+1, loss.item()))
 
-            if step % 500 == 0 and step != 0:
-                print('[Epoch:%d, Iter:%5d] train_loss: %.3f' %(epoch + 1, step + 1, running_loss / 500))
-                running_loss = 0.0
+        logger.info('[Epoch:%d] train_loss: %.3f' %(epoch, running_loss / step))
+        running_loss = 0.0
 
-    torch.save(net.state_dict(), f"ckpt/vgg16_cifar10_epoch_{epoch}.pth")
+    torch.save(net.state_dict(), f"ckpt/googlenet_crop_epoch_{epoch}.pth")
