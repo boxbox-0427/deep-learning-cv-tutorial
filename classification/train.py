@@ -11,12 +11,13 @@ from log import logger
 transform = transforms.Compose(
     [
         transforms.ToTensor(),
-        transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))
+        transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5)),
+        transforms.Resize((224,224))
     ]
 )
 
-train_set = MyDataSet(root=r"../data/Agriculturecropimages/archive/kag2", transform=transform)
-train_dataloader = DataLoader(train_set, batch_size=64, shuffle=True, num_workers=0)
+train_set = MyDataSet(root=r"../data/animal image dataset/archive/animals/animals", transform=transform)
+train_dataloader = DataLoader(train_set, batch_size=126, shuffle=True, num_workers=0)
 
 device = "cuda:0"
 
@@ -59,4 +60,4 @@ if __name__ == '__main__':
         logger.info('[Epoch:%d] train_loss: %.3f' %(epoch, running_loss / step))
         running_loss = 0.0
 
-    torch.save(net.state_dict(), f"ckpt/googlenet_crop_epoch_{epoch}.pth")
+    torch.save(net.state_dict(), f"ckpt/googlenet_animal_epoch_{epoch}.pth")

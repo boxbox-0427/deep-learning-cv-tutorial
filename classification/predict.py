@@ -9,10 +9,6 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 # classes = ('plane', 'car', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship', 'truck') for cifar-10
-device = "cuda:0"
-net = GoogLeNet(num_classes=5, init_weights=True).to(device)
-net.load_state_dict(torch.load(f"ckpt/googlenet_crop_epoch_100.pth"))
-net.eval()
 
 mean = (0.5, 0.5, 0.5)
 std = (0.5, 0.5, 0.5)
@@ -25,9 +21,14 @@ transform = transforms.Compose(
     ]
 )
 
-train_set = MyDataSet(root=r"../data/Agriculturecropimages/archive/kag2", transform=transform)
-train_dataloader = DataLoader(train_set, batch_size=1, shuffle=True, num_workers=0)
-iter_loader = iter(train_dataloader)
+test_set = MyDataSet(root=r"../data/Agriculturecropimages/archive/kag2", transform=transform)
+test_dataloader = DataLoader(test_set, batch_size=1, shuffle=True, num_workers=0)
+iter_loader = iter(test_dataloader)
+
+device = "cuda:0"
+net = GoogLeNet(num_classes=len(test_set.label), init_weights=True).to(device)
+net.load_state_dict(torch.load(f"ckpt/googlenet_crop_epoch_100.pth"))
+net.eval()
 
 def predict():
 
@@ -46,7 +47,7 @@ def predict():
         pil_arr = np.array(pil_img)
 
         plt.imshow(pil_arr)
-        plt.title(f"Ground Truth: {train_set.label[label.item()]} \n Pred Result: {train_set.label[pred]}")
+        plt.title(f"Ground Truth: {test_set.label[label.item()]} \n Pred Result: {test_set.label[pred]}")
     plt.subplots_adjust(hspace=0.5)
     plt.show()
 
