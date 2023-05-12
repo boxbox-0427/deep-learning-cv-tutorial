@@ -13,11 +13,16 @@ python predict.py
 ## 结果展示
 ![inference](assets/infer_cifar10.png)
 
+
+![inference](assets/infer_crop5.png)
+
+
 ## 模型进度
 - [x] [LeNet](classification/backbone/alexnet.py)
 - [x] [AlexNet](classification/backbone/alexnet.py)
 - [x] [VGG](classification/backbone/vgg.py)  
-- [ ] GoogleNet  
+- [x] GoogleNet  
+- [ ] ResNet
   ...
  
 ## 模型下载
