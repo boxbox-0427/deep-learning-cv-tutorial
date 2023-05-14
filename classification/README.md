@@ -21,11 +21,13 @@ python predict.py
 
 
 ## 模型进度
-- [x] [LeNet](classification/backbone/alexnet.py)
-- [x] [AlexNet](classification/backbone/alexnet.py)
-- [x] [VGG](classification/backbone/vgg.py)  
-- [x] GoogleNet  
-- [ ] ResNet
+- [x] [LeNet](backbone/alexnet.py)
+- [x] [AlexNet](backbone/alexnet.py)
+- [x] [VGG](backbone/vgg.py)  
+- [x] [GoogleNet](backbone/googlenet.py)
+- [x] [ResNet](backbone/resnet.py)
+- [ ] MobileNet
+
   ...
  
 ## 模型下载
