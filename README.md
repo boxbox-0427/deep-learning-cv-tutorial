@@ -24,7 +24,9 @@ python predict.py
 - [x] [AlexNet](classification/backbone/alexnet.py)
 - [x] [VGG](classification/backbone/vgg.py)  
 - [x] [GoogleNet](classification/backbone/googlenet.py)
-- [ ] ResNet
+- [x] [ResNet](classification/backbone/resnet.py)
+- [ ] MobileNet
+
   ...
  
 ## 模型下载

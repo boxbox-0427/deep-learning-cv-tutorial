@@ -1,7 +1,7 @@
 import torch
 from torchvision import transforms
 from torch.utils.data import DataLoader
-from backbone import GoogLeNet
+from backbone import GoogLeNet, ResNet101
 from torch.nn import CrossEntropyLoss
 from torch.optim import Adam, SGD
 from dataset import MyDataSet
@@ -17,13 +17,16 @@ transform = transforms.Compose(
 )
 
 train_set = MyDataSet(root=r"../data/animal image dataset/archive/animals/animals", transform=transform)
-train_dataloader = DataLoader(train_set, batch_size=256, shuffle=True, num_workers=0)
+train_dataloader = DataLoader(train_set, batch_size=128, shuffle=True, num_workers=0)
 
 device = "cuda:0"
 
-net = GoogLeNet(num_classes=len(train_set.label), init_weights=True).to(device)
+# net = GoogLeNet(num_classes=len(train_set.label), init_weights=True).to(device)
+net = ResNet101(num_classes=len(train_set.label)).to(device)
 loss_func = CrossEntropyLoss()
-optimizer = Adam(params=net.parameters(), lr=0.001, weight_decay=0.0005)
+
+params = [p for p in net.parameters() if p.requires_grad]
+optimizer = Adam(params=params, lr=0.001, weight_decay=0.0005)
 
 if __name__ == '__main__':
     net.train()
@@ -39,17 +42,16 @@ if __name__ == '__main__':
             optimizer.zero_grad()
 
             # for normal networks
-            # output = net(inputs)
-            # loss = loss_func(output, labels)
-            # loss.backward()
+            output = net(inputs)
+            loss = loss_func(output, labels)
 
             # for googlenet
-            logits, aux_logits1, aux_logits2 = net(inputs)
+            # logits, aux_logits1, aux_logits2 = net(inputs)
 
-            loss0 = loss_func(logits, labels)
-            loss1 = loss_func(aux_logits1, labels)
-            loss2 = loss_func(aux_logits2, labels)
-            loss = loss0 * 0.4 + loss1 * 0.3 + loss2 * 0.3
+            # loss0 = loss_func(logits, labels)
+            # loss1 = loss_func(aux_logits1, labels)
+            # loss2 = loss_func(aux_logits2, labels)
+            # loss = loss0 * 0.4 + loss1 * 0.3 + loss2 * 0.3
 
             loss.backward()
 
@@ -60,4 +62,4 @@ if __name__ == '__main__':
         logger.info('[Epoch:%d] train_loss: %.3f' %(epoch, running_loss / step))
         running_loss = 0.0
 
-    torch.save(net.state_dict(), f"ckpt/googlenet_animal_epoch_{epoch}.pth")
+    torch.save(net.state_dict(), f"ckpt/resnet101_animal_epoch_{epoch}.pth")

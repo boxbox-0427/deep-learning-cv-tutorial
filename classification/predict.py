@@ -3,7 +3,7 @@ import torchvision.transforms as transforms
 from torch.utils.data import DataLoader
 from torchvision.transforms import Normalize
 
-from backbone import GoogLeNet
+from backbone import ResNet101
 from classification.dataset import MyDataSet
 import matplotlib.pyplot as plt
 import numpy as np
@@ -27,8 +27,8 @@ test_dataloader = DataLoader(test_set, batch_size=1, shuffle=True, num_workers=0
 iter_loader = iter(test_dataloader)
 
 device = "cuda:0"
-net = GoogLeNet(num_classes=len(test_set.label), init_weights=True).to(device)
-net.load_state_dict(torch.load(f"ckpt/googlenet_animal_epoch_100.pth"))
+net = ResNet101(num_classes=len(test_set.label)).to(device)
+net.load_state_dict(torch.load(f"ckpt/resnet101_animal_epoch_100.pth"))
 net.eval()
 
 def predict():
