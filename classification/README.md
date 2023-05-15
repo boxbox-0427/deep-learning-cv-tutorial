@@ -26,8 +26,9 @@ python predict.py
 - [x] [VGG](backbone/vgg.py)  
 - [x] [GoogleNet](backbone/googlenet.py)
 - [x] [ResNet](backbone/resnet.py)
-- [x] [Shufflenet](classification/backbone/shufflenet.py)
-- [ ] DenseNet
+- [x] [Shufflenet](backbone/shufflenet.py)
+- [x] [DenseNet](backbone/densenet.py)
+- [ ] EfficientNet
 
   ...
  
