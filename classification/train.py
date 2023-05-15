@@ -1,7 +1,7 @@
 import torch
 from torchvision import transforms
 from torch.utils.data import DataLoader
-from backbone import GoogLeNet, ResNet101
+from backbone import GoogLeNet, ResNet101, DenseNet201
 from torch.nn import CrossEntropyLoss
 from torch.optim import Adam, SGD
 from dataset import MyDataSet
@@ -17,12 +17,13 @@ transform = transforms.Compose(
 )
 
 train_set = MyDataSet(root=r"../data/animal image dataset/archive/animals/animals", transform=transform)
-train_dataloader = DataLoader(train_set, batch_size=128, shuffle=True, num_workers=0)
+train_dataloader = DataLoader(train_set, batch_size=16, shuffle=True, num_workers=0)
 
 device = "cuda:0"
 
 # net = GoogLeNet(num_classes=len(train_set.label), init_weights=True).to(device)
-net = ResNet101(num_classes=len(train_set.label)).to(device)
+net = DenseNet201(num_classes=len(train_set.label)).to(device)
+
 loss_func = CrossEntropyLoss()
 
 params = [p for p in net.parameters() if p.requires_grad]
@@ -62,4 +63,4 @@ if __name__ == '__main__':
         logger.info('[Epoch:%d] train_loss: %.3f' %(epoch, running_loss / step))
         running_loss = 0.0
 
-    torch.save(net.state_dict(), f"ckpt/resnet101_animal_epoch_{epoch}.pth")
+    torch.save(net.state_dict(), f"ckpt/densenet201_animal_epoch_{epoch}.pth")
