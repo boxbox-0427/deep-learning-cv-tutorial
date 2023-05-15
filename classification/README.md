@@ -28,9 +28,9 @@ python predict.py
 - [x] [ResNet](backbone/resnet.py)
 - [x] [Shufflenet](backbone/shufflenet.py)
 - [x] [DenseNet](backbone/densenet.py)
-- [ ] EfficientNet
+- [x] [EfficientNet](backbone/efficientnet.py)
 
-  ...
+  To Be Continued...
  
 ## 模型下载
 - [LeNet-epoch100-cifar10](https://deepl-ckpt-classification.gd2.qingstor.com/lenet/lenet_cifar10_epoch_100.pth)
