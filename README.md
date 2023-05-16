@@ -28,6 +28,7 @@ python predict.py
 - [x] [Shufflenet](classification/backbone/shufflenet.py)
 - [x] [DenseNet](classification/backbone/densenet.py)
 - [x] [EfficientNet](classification/backbone/efficientnet.py)
+- [x] [Swin-Transformer](classification/backbone/swin_transformer.py)
 
   To Be Continued...
  
