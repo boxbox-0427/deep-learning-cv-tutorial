@@ -29,6 +29,7 @@ python predict.py
 - [x] [Shufflenet](backbone/shufflenet.py)
 - [x] [DenseNet](backbone/densenet.py)
 - [x] [EfficientNet](backbone/efficientnet.py)
+- [x] [Swin-Transformer](backbone/swin_transformer.py)
 
   To Be Continued...
  
